@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
+import '../constants/constants.dart';
 import '../models/noun.dart';
 import '../utils/load_dict.dart';
 import '../utils/word_accent.dart';
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
     List<String> newChoices = [];
 
     // pick a random case as the correct answer
-    final correctIndex = Random().nextInt(6);
+    final correctIndex = Random().nextInt(5) + 1;
     final correctAns = noun!.sgCases.elementAt(correctIndex);
     newChoices.add(correctAns);
 
@@ -80,17 +81,35 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final choicesCard = choices
-        .map(((e) => Card(
-            child: TextButton(child: Text(addAccent(e)), onPressed: () => onSelected(e)))))
+        .map(((e) => Padding(
+            padding: const EdgeInsets.all(5),
+            child: SizedBox(
+                width: 250,
+                height: 80,
+                child: Card(
+                    child: TextButton(
+                        child: Text(
+                          addAccent(e),
+                          style: Theme.of(context).textTheme.titleLarge,
+                          textAlign: TextAlign.center,
+                        ),
+                        onPressed: () => onSelected(e)))))))
         .toList();
 
     return Scaffold(
       appBar: AppBar(title: const Text("Russian Declension Quiz")),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Card(child: Text('${correctCase.name} of ${addAccent(noun?.accented ?? '')}')),
+            Text(
+              '${nounCasesNames.elementAt(correctCase.index)} case of ${addAccent(noun?.accented ?? '')}',
+              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
+            ),
+            const Padding(padding: EdgeInsets.all(5)),
             ...choicesCard,
+            const Padding(padding: EdgeInsets.all(5)),
             Text('Correct: $correctCount'),
             Text('Wrong: $wrongCount'),
           ],
