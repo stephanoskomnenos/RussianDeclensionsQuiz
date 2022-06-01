@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../models/noun.dart';
 import '../utils/load_dict.dart';
+import '../utils/word_accent.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,10 +30,10 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       nounDict = nounDictAwait;
     });
-    getChoises();
+    getChoices();
   }
 
-  void getChoises() {
+  void getChoices() {
     bool isValidNoun = false;
     while (!isValidNoun) {
       final randomNoun = Random().nextInt(nounDict.length - 2) + 1;
@@ -73,14 +74,14 @@ class _HomePageState extends State<HomePage> {
     } else {
       wrongCount++;
     }
-    getChoises();
+    getChoices();
   }
 
   @override
   Widget build(BuildContext context) {
     final choicesCard = choices
         .map(((e) => Card(
-            child: TextButton(child: Text(e), onPressed: () => onSelected(e)))))
+            child: TextButton(child: Text(addAccent(e)), onPressed: () => onSelected(e)))))
         .toList();
 
     return Scaffold(
@@ -88,7 +89,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           children: [
-            Card(child: Text('${correctCase.name} of ${noun?.accented}')),
+            Card(child: Text('${correctCase.name} of ${addAccent(noun?.accented ?? '')}')),
             ...choicesCard,
             Text('Correct: $correctCount'),
             Text('Wrong: $wrongCount'),
