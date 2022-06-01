@@ -1,6 +1,6 @@
 class Noun {
   const Noun(this.indeclinable, this.sgOnly, this.plOnly, this.accented,
-      this.sgCases, this.plCases);
+      this.translation, this.sgCases, this.plCases);
 
   factory Noun.fromDictList(List<String> dictLine) {
     bool indeclinable = dictLine.elementAt(7) == '0' ? false : true;
@@ -28,12 +28,12 @@ class Noun {
       }
     }
 
-    return Noun(
-        indeclinable, sgOnly, plOnly, dictLine.elementAt(1), sgCases, plCases);
+    return Noun(indeclinable, sgOnly, plOnly, dictLine.elementAt(1),
+        dictLine.elementAt(2), sgCases, plCases);
   }
 
   final bool indeclinable, sgOnly, plOnly;
-  final String accented;
+  final String accented, translation;
   final List<String> sgCases, plCases;
 }
 

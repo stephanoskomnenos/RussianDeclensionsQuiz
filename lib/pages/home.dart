@@ -108,6 +108,11 @@ class _HomePageState extends State<HomePage> {
               textAlign: TextAlign.center,
             ),
             const Padding(padding: EdgeInsets.all(5)),
+            Text(
+              addAccent(noun?.translation ?? ''),
+              textAlign: TextAlign.center,
+            ),
+            const Padding(padding: EdgeInsets.all(5)),
             ...choicesCard,
             const Padding(padding: EdgeInsets.all(5)),
             Text('Correct: $correctCount'),
