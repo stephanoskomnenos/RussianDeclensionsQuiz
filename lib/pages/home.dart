@@ -37,7 +37,9 @@ class _HomePageState extends State<HomePage> {
     while (!isValidNoun) {
       final randomNoun = Random().nextInt(nounDict.length - 2) + 1;
       noun = Noun.fromDictList(nounDict.elementAt(randomNoun));
-      isValidNoun = (noun!.plOnly == false && noun!.indeclinable == false);
+      isValidNoun = (noun!.plOnly == false &&
+          noun!.indeclinable == false &&
+          noun!.sgCases.elementAt(0) != '');
     }
     List<String> newChoices = [];
 
@@ -86,7 +88,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           children: [
-            Card(child: Text('${correctCase.name} + ${noun?.accented}')),
+            Card(child: Text('${correctCase.name} of ${noun?.accented}')),
             ...choicesCard,
             Text('Correct: $correctCount'),
             Text('Wrong: $wrongCount'),
