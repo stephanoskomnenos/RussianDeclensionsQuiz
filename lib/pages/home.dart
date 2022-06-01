@@ -35,27 +35,22 @@ class _HomePageState extends State<HomePage> {
   void getChoises() {
     bool isValidNoun = false;
     while (!isValidNoun) {
-      final randomNoun = Random().nextInt(nounDict.length);
+      final randomNoun = Random().nextInt(nounDict.length - 2) + 1;
       noun = Noun.fromDictList(nounDict.elementAt(randomNoun));
-      isValidNoun = noun!.plOnly == false;
+      isValidNoun = (noun!.plOnly == false && noun!.indeclinable == false);
     }
     List<String> newChoices = [];
 
     // pick a random case as the correct answer
     final correctIndex = Random().nextInt(6);
-    newChoices.add(noun!.sgCases.elementAt(correctIndex));
+    final correctAns = noun!.sgCases.elementAt(correctIndex);
+    newChoices.add(correctAns);
 
-    // generate choices without duplication
+    // generate choices without duplication of correct answer
     for (int i = 0; i < 3;) {
       final thisCase = noun!.sgCases.elementAt(Random().nextInt(6));
-      bool caseDuplicated = false;
-      for (final choice in newChoices) {
-        if (choice == thisCase) {
-          caseDuplicated = true;
-          break;
-        }
-      }
-      if (caseDuplicated == true) {
+
+      if (correctAns == thisCase) {
         continue;
       }
       newChoices.add(thisCase);
