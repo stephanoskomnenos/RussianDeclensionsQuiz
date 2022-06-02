@@ -1,16 +1,10 @@
-# russian_declensions_quiz
+# Russian Declensions Quiz
 
-A new Flutter project.
+Russian declension quiz on web & mobile. 
 
-## Getting Started
+## Licenses
 
-This project is a starting point for a Flutter application.
+The main program is licensed under GNU General Public License Version 3.
 
-A few resources to get you started if this is your first Flutter project:
+This repository contains database dumped from [OpenRussian.org](openrussian.org). Files in `assets/dict/` directory are licensed under CC BY-SA license.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
