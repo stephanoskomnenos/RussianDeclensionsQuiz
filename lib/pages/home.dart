@@ -13,17 +13,31 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<List<String>> nounDict = [];
   Noun? noun;
   NounCase correctCase = NounCase.nom;
   List<String> choices = [];
   int correctCount = 0, wrongCount = 0;
+  late AnimationController controller;
 
   @override
   void initState() {
     super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    )..addListener(() {
+        setState(() {});
+      });
+    controller.repeat();
     loadNounDict();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
   }
 
   void loadNounDict() async {
@@ -96,29 +110,35 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () => onSelected(e)))))))
         .toList();
 
+    final pageBodyChoices = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          '${nounCasesNames.elementAt(correctCase.index)} case of ${addAccent(noun?.accented ?? '')}',
+          style: Theme.of(context).textTheme.titleLarge,
+          textAlign: TextAlign.center,
+        ),
+        const Padding(padding: EdgeInsets.all(5)),
+        Text(
+          addAccent(noun?.translation ?? ''),
+          textAlign: TextAlign.center,
+        ),
+        const Padding(padding: EdgeInsets.all(5)),
+        ...choicesCard,
+        const Padding(padding: EdgeInsets.all(5)),
+        Text('Correct: $correctCount'),
+        Text('Wrong: $wrongCount'),
+      ],
+    );
+
+    final pageBody = choices.isEmpty
+        ? CircularProgressIndicator(value: controller.value)
+        : pageBodyChoices;
+
     return Scaffold(
       appBar: AppBar(title: const Text("Russian Declension Quiz")),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '${nounCasesNames.elementAt(correctCase.index)} case of ${addAccent(noun?.accented ?? '')}',
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
-            const Padding(padding: EdgeInsets.all(5)),
-            Text(
-              addAccent(noun?.translation ?? ''),
-              textAlign: TextAlign.center,
-            ),
-            const Padding(padding: EdgeInsets.all(5)),
-            ...choicesCard,
-            const Padding(padding: EdgeInsets.all(5)),
-            Text('Correct: $correctCount'),
-            Text('Wrong: $wrongCount'),
-          ],
-        ),
+        child: pageBody,
       ),
     );
   }
