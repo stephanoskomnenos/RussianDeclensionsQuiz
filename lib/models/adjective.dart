@@ -12,7 +12,7 @@ class Adjective extends Word {
 
   factory Adjective.fromDictList(List<String> dictLine) {
     Map<AdjectiveCase, String> cases = {};
-    int caseStart = 5;
+    int caseStart = 4;
     for (int i = 0; i < 23; i++) {
       cases[AdjectiveCase.values[i]] = dictLine.elementAt(caseStart + i);
     }
