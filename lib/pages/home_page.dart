@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:russian_declensions_quiz/pages/components/loading_indicator.dart';
 
@@ -23,11 +24,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void loadDicts() async {
-    final adjectiveDictAwait = await loadDict('adjectives.csv');
-    final nounDictAwait = await loadDict('nouns.csv');
+    final dictsAwait =
+        await Future.wait([loadDict('adjectives.csv'), loadDict('nouns.csv')]);
     setState(() {
-      adjectiveDict = adjectiveDictAwait;
-      nounDict = nounDictAwait;
+      adjectiveDict = dictsAwait[0];
+      nounDict = dictsAwait[1];
     });
   }
 
