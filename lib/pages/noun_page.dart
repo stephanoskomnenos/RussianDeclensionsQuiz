@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../models/noun.dart';
@@ -12,7 +11,7 @@ class NounPage extends StatefulWidget {
   State<NounPage> createState() => _NounPageState();
 }
 
-class _NounPageState extends State<NounPage> with TickerProviderStateMixin {
+class _NounPageState extends State<NounPage> {
   late Noun noun;
   int correctCount = 0, wrongCount = 0;
 
@@ -23,15 +22,7 @@ class _NounPageState extends State<NounPage> with TickerProviderStateMixin {
   }
 
   void getRandomWord() {
-    bool isValidNoun = false;
-    late Noun newNoun;
-    while (!isValidNoun) {
-      final randomIndex = Random().nextInt(widget.nounDict.length - 2) + 1;
-      newNoun = Noun.fromDictList(widget.nounDict.elementAt(randomIndex));
-      isValidNoun = newNoun.indeclinable == false &&
-          ((!newNoun.plOnly && newNoun.cases[NounCase.sgNom] != '') ||
-              (!newNoun.sgOnly && newNoun.cases[NounCase.plNom] != ''));
-    }
+    final newNoun = Noun.getRandomWord(widget.nounDict);
 
     setState(() {
       noun = newNoun;

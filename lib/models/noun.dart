@@ -52,6 +52,18 @@ class Noun extends Word {
         sgOnly, plOnly, cases);
   }
 
+  factory Noun.getRandomWord(List<List<String>> nounDict) {
+    bool isValidNoun = false;
+    late Noun newNoun;
+    while (!isValidNoun) {
+      final randomIndex = Random().nextInt(nounDict.length - 2) + 1;
+      newNoun = Noun.fromDictList(nounDict.elementAt(randomIndex));
+      isValidNoun = newNoun.cases[NounCase.sgNom] != '';
+    }
+
+    return newNoun;
+  }
+
   @override
   MapEntry<String, String> generateAnswer() {
     while (true) {

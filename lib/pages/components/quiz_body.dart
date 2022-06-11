@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/word.dart';
 import '../../utils/word_accent.dart';
 
-class QuizBody extends StatelessWidget {
+class QuizBody<T extends Word> extends StatelessWidget {
   const QuizBody({
     Key? key,
     required this.word,
@@ -12,7 +12,7 @@ class QuizBody extends StatelessWidget {
     required this.wrongCount,
   }) : super(key: key);
 
-  final Word word;
+  final T word;
   final int correctCount, wrongCount;
   final Function(String selection, String correctAnswer) onSelected;
 

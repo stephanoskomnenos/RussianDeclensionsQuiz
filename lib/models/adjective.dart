@@ -21,6 +21,19 @@ class Adjective extends Word {
   }
 
   @override
+  factory Adjective.getRandomWord(List<List<String>> adjectiveDict) {
+    bool isValidAdj = false;
+    late Adjective newAdj;
+    while (!isValidAdj) {
+      final randomIndex = Random().nextInt(adjectiveDict.length - 2) + 1;
+      newAdj = Adjective.fromDictList(adjectiveDict.elementAt(randomIndex));
+      isValidAdj = newAdj.cases[AdjectiveCase.declMNom] != '';
+    }
+
+    return newAdj;
+  }
+
+  @override
   MapEntry<String, String> generateAnswer() {
     while (true) {
       var answerCase =

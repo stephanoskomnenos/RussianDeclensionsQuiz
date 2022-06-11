@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../models/adjective.dart';
@@ -14,8 +13,7 @@ class AdjectivePage extends StatefulWidget {
   State<AdjectivePage> createState() => _AdjectivePageState();
 }
 
-class _AdjectivePageState extends State<AdjectivePage>
-    with TickerProviderStateMixin {
+class _AdjectivePageState extends State<AdjectivePage> {
   Adjective? adj;
   int correctCount = 0, wrongCount = 0;
 
@@ -26,14 +24,7 @@ class _AdjectivePageState extends State<AdjectivePage>
   }
 
   void getRandomWord() {
-    bool isValidAdj = false;
-    late Adjective newAdj;
-    while (!isValidAdj) {
-      final randomIndex = Random().nextInt(widget.adjectiveDict.length - 2) + 1;
-      newAdj =
-          Adjective.fromDictList(widget.adjectiveDict.elementAt(randomIndex));
-      isValidAdj = newAdj.cases[AdjectiveCase.declMNom] != '';
-    }
+    final newAdj = Adjective.getRandomWord(widget.adjectiveDict);
 
     setState(() {
       adj = newAdj;
