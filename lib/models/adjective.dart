@@ -25,7 +25,7 @@ class Adjective extends Word {
     bool isValidAdj = false;
     late Adjective newAdj;
     while (!isValidAdj) {
-      final randomIndex = Random().nextInt(adjectiveDict.length - 2) + 1;
+      final randomIndex = Random().nextInt(adjectiveDict.length - 1);
       newAdj = Adjective.fromDictList(adjectiveDict.elementAt(randomIndex));
       isValidAdj = newAdj.cases[AdjectiveCase.declMNom] != '';
     }

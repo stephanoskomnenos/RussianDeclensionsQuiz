@@ -18,7 +18,7 @@ class Noun extends Word {
 
     Map<NounCase, String> cases = {};
 
-    int sgIndex = 10, plIndex = 10;
+    int sgIndex = 10, plIndex = 16;
 
     if (indeclinable == false) {
       if (plOnly == false) {
@@ -31,8 +31,6 @@ class Noun extends Word {
           NounCase.sgPrep: dictLine.elementAt(sgIndex + 5),
         };
         cases.addEntries(sgCases.entries);
-
-        plIndex += 6;
       }
 
       if (sgOnly == false) {
@@ -56,9 +54,10 @@ class Noun extends Word {
     bool isValidNoun = false;
     late Noun newNoun;
     while (!isValidNoun) {
-      final randomIndex = Random().nextInt(nounDict.length - 2) + 1;
+      final randomIndex = Random().nextInt(nounDict.length - 1);
       newNoun = Noun.fromDictList(nounDict.elementAt(randomIndex));
-      isValidNoun = newNoun.cases[NounCase.sgNom] != '';
+      isValidNoun =
+          !newNoun.indeclinable && newNoun.cases[NounCase.sgNom] != '';
     }
 
     return newNoun;
